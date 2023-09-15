@@ -6,7 +6,7 @@ const lecturerSetAttendanceSchema = new Schema({
         type: String,
     },
     time: {
-        type:TimeRanges,
+        type:String,
     },
 }, {timestamps:true})
 

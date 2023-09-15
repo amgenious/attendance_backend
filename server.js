@@ -13,7 +13,7 @@ app.set('views');
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: true}));
 
-app.get('/home', (req,res) => {
+app.get('/', (req,res) => {
     res.send("Am alive")
 })
 
