@@ -1,4 +1,4 @@
-const Class = require("../models/Lecturers/createClass")
+const createclass = require("../models/Lecturers/createClass")
 const LecturerSignup = require("../models/Lecturers/lecturersSignup")
 const Attendance = require("../models/Lecturers/lecturerSetAttendance")
 const PDF = require('../models/Students/studentAttendance')
@@ -8,8 +8,15 @@ exports.lecturerSignup = async (req,res) => {
     const { username, email, password } = req.body;
 
     try{
-        await LecturerSignup.insertMany({username, email, password})    
-        res.send("Student Signup successful")
+        const check = await LecturerSignup.findOne({email:email})
+        if(check.email === email){
+            res.json('exist')
+        }
+        else{
+            res.json("notexist")
+            await LecturerSignup.insertMany({username, email, password})    
+            res.send("Student Signup successful")
+        }
     }
     catch(err){
         res.send(err)
@@ -17,48 +24,57 @@ exports.lecturerSignup = async (req,res) => {
 }
 
 exports.lecturerLogin = async (req,res) => {
-    const {email, password} = req.body;
+    const {username,email, password} = req.body;
     try{
-        const check = await LecturerSignup.findOne({email:email,password:password})
+        const check = await LecturerSignup.findOne({username:username, email:email,password:password})
         if(check.password === password){
-            res.send('Login Successful')
+           
+            res.json('exist')
         }
         else{
-            res.send("wrong password")
+          
+            res.json("notexist")
         }
     }
     catch (err){
-        res.send(err)
+        
+        res.json("notexisted")
     }
 }
 
 exports.createclass = async (req,res) => {
-    const {classname, coursename, level, lecturer_name, numberofstudents} = req.body;
+    const {classname, coursename, level, lecturername, numberofstudents} = req.body;
     try{
-        await Class.insertMany({classname, coursename, level, lecturer_name, numberofstudents})
-        res.send("class created succedss")
+        await createclass.insertMany({classname, coursename, level, lecturername, numberofstudents})
+        res.json('created')
     }
     catch (err){
         console.log(err)
     }
 }
 exports.getclass = async (req,res) => {
-    Class.find()
+    createclass.find()
+    .sort({ createdAt: -1 })
     .then(data => res.send(data))
 }
 
 exports.setattendance = async (req,res) => {
-    const {unique_code, time} =req.body;
+    const {uniquecode, time} =req.body;
     try{
-        await Attendance.insertMany({unique_code,time})
-        res.send("attendance set")
+        await Attendance.insertMany({uniquecode,time})
+        res.json('created')
     }
     catch(err){
         console.log(err)
     }
 }
 exports.getpdf = async (req,res) => {
-    const {unique_code} = req.body;
-    PDF.find(unique_code)
+    const {uniquecode} = req.body;
+    PDF.find({uniquecode: uniquecode})
+    .then(data => res.send(data))
+}
+exports.takeattendance = async(req,res) => {
+    const atId = req.params.id;
+     createclass.findById(atId)
     .then(data => res.send(data))
 }

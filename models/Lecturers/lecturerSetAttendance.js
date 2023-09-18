@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const lecturerSetAttendanceSchema = new Schema({
-    unique_code: {
+    uniquecode: {
         type: String,
     },
     time: {

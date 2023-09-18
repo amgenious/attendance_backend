@@ -3,19 +3,23 @@ const Schema = mongoose.Schema;
 
 const createClassSchema = new Schema({
     classname:{
-        type: String
+        type: String,
+        
     },
     coursename: {
         type: String,
+        
     },
     level: {
         type: String,
+
     },
-    lecturer_name:{
-        type:String
+    lecturername:{
+        type:String,
+        
     },
     numberofstudents: {
-        type: Number,
+        type: String,    
     },
  
 }, {timestamps:true})

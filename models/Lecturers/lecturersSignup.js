@@ -14,7 +14,7 @@ const lecturerSignupSchema = new Schema({
     },
     password: {
         type: String,
-        required: [true, 'Please enter a password'],
+        required: true, 
     },
 }, {timestamps:true})
 

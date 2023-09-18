@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const studentAttendanceSchema = new Schema({
-    unique_code: {
+    uniquecode: {
         type: String,
     },
-    index_number: {
+    indexnumber: {
         type: String,
     },
     picture:{
