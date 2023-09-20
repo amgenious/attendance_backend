@@ -7,11 +7,7 @@ const studentAttendanceSchema = new Schema({
     },
     indexnumber: {
         type: String,
-    },
-    picture:{
-        type: String,
     }
- 
 }, {timestamps:true})
 
 const StudentAttendance = mongoose.model('StudentAttendance', studentAttendanceSchema);

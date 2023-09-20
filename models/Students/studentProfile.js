@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const studentProfileSchema = new Schema({
-    index_number: {
+    indexnumber: {
         type: String,
     },
     fullname: {

@@ -8,8 +8,14 @@ exports.studentSignup = async (req,res) => {
     const { username, email, password } = req.body;
 
     try{
-        await StudentSignup.insertMany({username, email, password})    
-        res.send("Student Signup successful")
+        const check = await StudentSignup.findOne({email:email})
+        if(check.email === email){
+            res.json('exist')
+        }
+        else{
+            res.json("notexist")
+            await StudentSignup.insertMany({username, email, password})    
+        }
     }
     catch(err){
         res.send(err)
@@ -21,10 +27,12 @@ exports.studentLogin = async (req,res) => {
     try{
         const check = await StudentSignup.findOne({email:email,password:password})
         if(check.password === password){
-            res.send('Login Successful')
+            res.json('exist')
         }
-        else{
-            res.send("wrong password")
+        else if(check.password != password){
+            res.json("notexist")
+        }else{
+            res.json('notexisted')
         }
     }
     catch (err){
@@ -32,20 +40,20 @@ exports.studentLogin = async (req,res) => {
     }
 }
 exports.studentProfile = async (req,res) => {
-    const {index_number, fullname, picture} = req.body;
+    const {indexnumber, fullname, picture} = req.body;
     try{
-        
-        await StudentProfile.insertMany({index_number, fullname, picture})
-        res.send("Profile updated")
+        await StudentProfile.insertMany({indexnumber, fullname, picture})
+        res.json('created')
     }
     catch (err){
         res.send(err)
     }
 }
 exports.studentattendance = async (req,res) => {
-    const {index_number, unique_code,picture} = req.body;
+    const {indexnumber, uniquecode,} = req.body;
     try{
-        await StudentAttendance.insertMany({index_number,unique_code,picture})
+        await StudentAttendance.insertMany({indexnumber,uniquecode})
+        res.json('created')
     }catch(err){
         res.send(err)
     }

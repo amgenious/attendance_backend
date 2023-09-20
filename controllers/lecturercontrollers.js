@@ -15,7 +15,7 @@ exports.lecturerSignup = async (req,res) => {
         else{
             res.json("notexist")
             await LecturerSignup.insertMany({username, email, password})    
-            res.send("Student Signup successful")
+           
         }
     }
     catch(err){
@@ -73,6 +73,7 @@ exports.getpdf = async (req,res) => {
     PDF.find({uniquecode: uniquecode})
     .then(data => res.send(data))
 }
+
 exports.takeattendance = async(req,res) => {
     const atId = req.params.id;
      createclass.findById(atId)
