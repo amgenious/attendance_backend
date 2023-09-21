@@ -11,6 +11,8 @@ router.post('/studentattendance', controller.studentattendance)
 
 // common api
 router.get('/classes', control.getclass)
+router.get('/searchpdf', control.searchpdf)
+router.get('/searchstudent', control.searchstudent)
 
 // lecturer apis
 router.get('/takeattendance/:id',control.takeattendance)
@@ -19,7 +21,7 @@ router.post('/lecturersignup', control.lecturerSignup)
 router.post('/lecturerlogin', control.lecturerLogin)
 router.post('/createclass', control.createclass)
 router.post('/setattendance', control.setattendance)
-router.post("/getpdf",control.getpdf)
+
 
 
 module.exports = router;

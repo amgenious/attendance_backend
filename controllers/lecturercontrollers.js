@@ -2,21 +2,16 @@ const createclass = require("../models/Lecturers/createClass")
 const LecturerSignup = require("../models/Lecturers/lecturersSignup")
 const Attendance = require("../models/Lecturers/lecturerSetAttendance")
 const PDF = require('../models/Students/studentAttendance')
+const StudentProfile =  require ("../models/Students/studentProfile")
 
 
 exports.lecturerSignup = async (req,res) => {
     const { username, email, password } = req.body;
 
     try{
-        const check = await LecturerSignup.findOne({email:email})
-        if(check.email === email){
-            res.json('exist')
-        }
-        else{
-            res.json("notexist")
-            await LecturerSignup.insertMany({username, email, password})    
+        await LecturerSignup.insertMany({username, email, password})    
+        res.json("created")
            
-        }
     }
     catch(err){
         res.send(err)
@@ -68,10 +63,24 @@ exports.setattendance = async (req,res) => {
         console.log(err)
     }
 }
-exports.getpdf = async (req,res) => {
-    const {uniquecode} = req.body;
-    PDF.find({uniquecode: uniquecode})
-    .then(data => res.send(data))
+
+exports.searchpdf = async (req,res)=>{
+    const query = req.query.q;
+  try {
+    const results = await PDF.find({ name: { $regex: query, $options: 'i' } });
+    res.json(results);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+exports.searchstudent = async (req,res)=>{
+    const quer = req.query.q;
+  try {
+    const results = await StudentProfile.find({ name: { $regex: quer, $options: 'i' } });
+    res.json(results);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
 }
 
 exports.takeattendance = async(req,res) => {

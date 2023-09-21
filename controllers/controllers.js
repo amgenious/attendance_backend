@@ -8,14 +8,8 @@ exports.studentSignup = async (req,res) => {
     const { username, email, password } = req.body;
 
     try{
-        const check = await StudentSignup.findOne({email:email})
-        if(check.email === email){
-            res.json('exist')
-        }
-        else{
-            res.json("notexist")
-            await StudentSignup.insertMany({username, email, password})    
-        }
+        await StudentSignup.insertMany({username, email, password})          
+        res.json("created")
     }
     catch(err){
         res.send(err)
@@ -26,13 +20,11 @@ exports.studentLogin = async (req,res) => {
     const {email, password} = req.body;
     try{
         const check = await StudentSignup.findOne({email:email,password:password})
-        if(check.password === password){
+        if(check){
             res.json('exist')
         }
-        else if(check.password != password){
-            res.json("notexist")
-        }else{
-            res.json('notexisted')
+        else{
+            res.json('notexist')
         }
     }
     catch (err){
