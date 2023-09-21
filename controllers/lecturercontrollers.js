@@ -67,7 +67,7 @@ exports.setattendance = async (req,res) => {
 exports.searchpdf = async (req,res)=>{
     const query = req.query.q;
   try {
-    const results = await PDF.find({ name: { $regex: query, $options: 'i' } });
+    const results = await PDF.find({uniquecode:query});
     res.json(results);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
@@ -76,7 +76,7 @@ exports.searchpdf = async (req,res)=>{
 exports.searchstudent = async (req,res)=>{
     const quer = req.query.q;
   try {
-    const results = await StudentProfile.find({ name: { $regex: quer, $options: 'i' } });
+    const results = await StudentProfile.find({ indexnumber:quer});
     res.json(results);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
